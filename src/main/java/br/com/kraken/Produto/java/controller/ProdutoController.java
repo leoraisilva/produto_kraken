@@ -4,12 +4,15 @@ import br.com.kraken.Produto.java.dto.ProdutoModelDTO;
 import br.com.kraken.Produto.java.model.ProdutoModel;
 import br.com.kraken.Produto.java.service.ProdutoService;
 import jakarta.validation.Valid;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -24,11 +27,30 @@ public class ProdutoController {
         this.produtoService = produtoService;
     }
     @PostMapping
-    public ResponseEntity<Object> cadastrar(@RequestBody @Valid ProdutoModelDTO produtoModelDTO) {
+    public ResponseEntity<Object> cadastrar(@RequestParam(value = "nomeProduto") String nomeProduto,
+                                            @RequestParam(value = "descricao") String descricao,
+                                            @RequestParam(value = "categoriaId") UUID categoriaId,
+                                            @RequestParam(value = "valorUnitario") float valorUnitario,
+                                            @RequestParam(value = "estoqueid") UUID estoqueid,
+                                            @RequestParam(value = "quantidadeProduto") int quantidadeProduto,
+                                            @RequestPart(value = "image")MultipartFile image) {
         ProdutoModel produtoModel = new ProdutoModel();
-        BeanUtils.copyProperties(produtoModelDTO, produtoModel);
-        produtoModel.setDataRecebimento(LocalDateTime.now(ZoneId.of("UTC")));
-        return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.getProdutoRepository().save(produtoModel));
+        try {
+            if(image.isEmpty())
+                return ResponseEntity.badRequest().body("Not Found image");
+            String imageBase64 = Base64.getEncoder().encodeToString(image.getBytes());
+            produtoModel.setImage(imageBase64);
+            produtoModel.setNomeProduto(nomeProduto);
+            produtoModel.setQuantidadeProduto(quantidadeProduto);
+            produtoModel.setCategoriaId(categoriaId);
+            produtoModel.setEstoqueId(estoqueid);
+            produtoModel.setDescricao(descricao);
+            produtoModel.setValorUnitario(valorUnitario);
+            produtoModel.setDataModificacao(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
+        } catch (IOException e) {
+            return ResponseEntity.internalServerError().body("Error Register Product");
+        }
+            return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.getProdutoRepository().save(produtoModel));
     }
 
     @GetMapping
@@ -36,9 +58,9 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.OK).body(produtoService.findAll());
     }
 
-    @GetMapping ("/{identificador}")
-    public ResponseEntity<Object> localizar(@PathVariable (value = "identificador") UUID identificador){
-        Optional<ProdutoModel> produtoModelOptional = produtoService.getProdutoRepository().findById(identificador);
+    @GetMapping ("/{id}")
+    public ResponseEntity<Object> localizar(@PathVariable (value = "id") UUID id){
+        Optional<ProdutoModel> produtoModelOptional = produtoService.getProdutoRepository().findById(id);
         return produtoModelOptional.<ResponseEntity<Object>>map(
                 produtoModel -> ResponseEntity.status(HttpStatus.OK).body(produtoModel))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found Product!!")
@@ -54,15 +76,17 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.OK).body("Delete Success!!!");
     }
 
-    @PutMapping("/{identificador}")
-    public ResponseEntity<Object> alterar(@PathVariable (value = "identificador") UUID identificador, @RequestBody @Valid ProdutoModelDTO produtoModelDTO){
-        Optional<ProdutoModel> produtoModelOptional = produtoService.getProdutoRepository().findById(identificador);
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> alterar(@PathVariable (value = "id") UUID id, @RequestBody @Valid ProdutoModelDTO produtoModelDTO){
+        Optional<ProdutoModel> produtoModelOptional = produtoService.getProdutoRepository().findById(id);
         if (!produtoModelOptional.isPresent())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found Product!!");
-        produtoModelOptional.get().setNome(produtoModelDTO.nome());
+        produtoModelOptional.get().setNomeProduto(produtoModelDTO.nomeProduto());
         produtoModelOptional.get().setDescricao(produtoModelDTO.descricao());
-        produtoModelOptional.get().setTipo(produtoModelDTO.tipo());
-        produtoModelOptional.get().setDataRecebimento(produtoModelDTO.dataRecebimento());
+        produtoModelOptional.get().setQuantidadeProduto(produtoModelDTO.quantidadeProduto());
+        produtoModelOptional.get().setDataModificacao(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
+        produtoModelOptional.get().setEstoqueId(produtoModelDTO.estoqueid());
+        produtoModelOptional.get().setCategoriaId(produtoModelDTO.categoriaId());
         produtoModelOptional.get().setValorUnitario(produtoModelDTO.valorUnitario());
         return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.getProdutoRepository().save(produtoModelOptional.get()));
     }

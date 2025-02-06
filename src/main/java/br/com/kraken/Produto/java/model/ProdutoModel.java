@@ -10,43 +10,51 @@ public class ProdutoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(nullable = false, length = 10)
-    private UUID identificador;
-    @Column(name = "nome", nullable = false)
-    private String nome;
+    private UUID produtoId;
+    @Column(name = "nome_produto", nullable = false)
+    private String nomeProduto;
     @Column(name = "descricao", nullable = false)
     private String descricao;
-    @Column(name = "data_recebimento", nullable = false)
-    private LocalDateTime dataRecebimento;
-    @Column(name = "tipo", nullable = false)
-    private boolean tipo;
+    @Column(name = "data_modificacao", nullable = false)
+    private LocalDateTime dataModificacao;
+    @Column(name = "categoriaId", nullable = false)
+    private UUID categoriaId;
     @Column(name = "valor_unitario", nullable = false)
     private float valorUnitario;
+    @Column(name = "estoque_id", nullable = false)
+    private UUID estoqueid;
+    @Column(name = "quantidade_produto")
+    private int quantidadeProduto;
+    @Column(name = "image", columnDefinition = "TEXT")
+    private String image;
 
-    public ProdutoModel(UUID identificador, String nome, String descricao, LocalDateTime dataRecebimento, boolean tipo, float valorUnitario) {
-        this.identificador = identificador;
-        this.nome = nome;
+    public ProdutoModel(String nomeProduto, String descricao, LocalDateTime dataModificacao, UUID categoriaId, float valorUnitario, UUID estoqueid, int quantidadeProduto, String image) {
+        this.nomeProduto = nomeProduto;
         this.descricao = descricao;
-        this.dataRecebimento = dataRecebimento;
-        this.tipo = tipo;
+        this.dataModificacao = dataModificacao;
+        this.categoriaId = categoriaId;
         this.valorUnitario = valorUnitario;
+        this.estoqueid = estoqueid;
+        this.quantidadeProduto = quantidadeProduto;
+        this.image = image;
     }
 
     public ProdutoModel () {}
 
-    public UUID getIdentificador() {
-        return identificador;
+    public UUID getProdutoId() {
+        return produtoId;
     }
 
-    public void setIdentificador(UUID identificador) {
-        this.identificador = identificador;
+    public void setProdutoId(UUID produtoId) {
+        this.produtoId = produtoId;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeProduto() {
+        return nomeProduto;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeProduto(String nomeProduto) {
+        this.nomeProduto = nomeProduto;
     }
 
     public String getDescricao() {
@@ -57,20 +65,20 @@ public class ProdutoModel {
         this.descricao = descricao;
     }
 
-    public LocalDateTime getDataRecebimento() {
-        return dataRecebimento;
+    public LocalDateTime getDataModificacao() {
+        return dataModificacao;
     }
 
-    public void setDataRecebimento(LocalDateTime dataRecebimento) {
-        this.dataRecebimento = dataRecebimento;
+    public void setDataModificacao(LocalDateTime dataModificacao) {
+        this.dataModificacao = dataModificacao;
     }
 
-    public boolean isTipo() {
-        return tipo;
+    public UUID getCategoriaId() {
+        return categoriaId;
     }
 
-    public void setTipo(boolean tipo) {
-        this.tipo = tipo;
+    public void setCategoriaId(UUID categoriaId) {
+        this.categoriaId = categoriaId;
     }
 
     public float getValorUnitario() {
@@ -81,4 +89,27 @@ public class ProdutoModel {
         this.valorUnitario = valorUnitario;
     }
 
+    public UUID getEstoqueid() {
+        return estoqueid;
+    }
+
+    public void setEstoqueId(UUID estoqueId) {
+        this.estoqueid = estoqueid;
+    }
+
+    public int getQuantidadeProduto() {
+        return quantidadeProduto;
+    }
+
+    public void setQuantidadeProduto(int quantidadeProduto) {
+        this.quantidadeProduto = quantidadeProduto;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 }
