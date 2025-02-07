@@ -31,7 +31,7 @@ public class ProdutoController {
                                             @RequestParam(value = "descricao") String descricao,
                                             @RequestParam(value = "categoriaId") UUID categoriaId,
                                             @RequestParam(value = "valorUnitario") float valorUnitario,
-                                            @RequestParam(value = "estoqueid") UUID estoqueid,
+                                            @RequestParam(value = "estoqueId") UUID estoqueId,
                                             @RequestParam(value = "quantidadeProduto") int quantidadeProduto,
                                             @RequestPart(value = "image")MultipartFile image) {
         ProdutoModel produtoModel = new ProdutoModel();
@@ -43,7 +43,7 @@ public class ProdutoController {
             produtoModel.setNomeProduto(nomeProduto);
             produtoModel.setQuantidadeProduto(quantidadeProduto);
             produtoModel.setCategoriaId(categoriaId);
-            produtoModel.setEstoqueId(estoqueid);
+            produtoModel.setEstoqueId(estoqueId);
             produtoModel.setDescricao(descricao);
             produtoModel.setValorUnitario(valorUnitario);
             produtoModel.setDataModificacao(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
@@ -85,7 +85,7 @@ public class ProdutoController {
         produtoModelOptional.get().setDescricao(produtoModelDTO.descricao());
         produtoModelOptional.get().setQuantidadeProduto(produtoModelDTO.quantidadeProduto());
         produtoModelOptional.get().setDataModificacao(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
-        produtoModelOptional.get().setEstoqueId(produtoModelDTO.estoqueid());
+        produtoModelOptional.get().setEstoqueId(produtoModelDTO.estoqueId());
         produtoModelOptional.get().setCategoriaId(produtoModelDTO.categoriaId());
         produtoModelOptional.get().setValorUnitario(produtoModelDTO.valorUnitario());
         return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.getProdutoRepository().save(produtoModelOptional.get()));

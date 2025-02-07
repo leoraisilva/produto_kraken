@@ -21,20 +21,20 @@ public class ProdutoModel {
     private UUID categoriaId;
     @Column(name = "valor_unitario", nullable = false)
     private float valorUnitario;
-    @Column(name = "estoque_id", nullable = false)
-    private UUID estoqueid;
+    @Column(name = "estoqueId", nullable = false)
+    private UUID estoqueId;
     @Column(name = "quantidade_produto")
     private int quantidadeProduto;
     @Column(name = "image", columnDefinition = "TEXT")
     private String image;
 
-    public ProdutoModel(String nomeProduto, String descricao, LocalDateTime dataModificacao, UUID categoriaId, float valorUnitario, UUID estoqueid, int quantidadeProduto, String image) {
+    public ProdutoModel(String nomeProduto, String descricao, LocalDateTime dataModificacao, UUID categoriaId, float valorUnitario, UUID estoqueId, int quantidadeProduto, String image) {
         this.nomeProduto = nomeProduto;
         this.descricao = descricao;
         this.dataModificacao = dataModificacao;
         this.categoriaId = categoriaId;
         this.valorUnitario = valorUnitario;
-        this.estoqueid = estoqueid;
+        this.estoqueId = estoqueId;
         this.quantidadeProduto = quantidadeProduto;
         this.image = image;
     }
@@ -89,12 +89,12 @@ public class ProdutoModel {
         this.valorUnitario = valorUnitario;
     }
 
-    public UUID getEstoqueid() {
-        return estoqueid;
+    public UUID getEstoqueId() {
+        return estoqueId;
     }
 
     public void setEstoqueId(UUID estoqueId) {
-        this.estoqueid = estoqueid;
+        this.estoqueId = estoqueId;
     }
 
     public int getQuantidadeProduto() {

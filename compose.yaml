@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+
+  # Serviço para a aplicação Spring Boot
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: produto-app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/vendas_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - java_vendas-network
+
+networks:
+  java_vendas-network:
+    external: true
+
