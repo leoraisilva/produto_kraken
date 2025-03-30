@@ -1,0 +1,6 @@
+br\com\kraken\Produto\java\dto\ProdutoModelDTO.class
+br\com\kraken\Produto\ProdutoApplication.class
+br\com\kraken\Produto\java\repository\ProdutoRepository.class
+br\com\kraken\Produto\java\service\ProdutoService.class
+br\com\kraken\Produto\java\model\ProdutoModel.class
+br\com\kraken\Produto\java\controller\ProdutoController.class
