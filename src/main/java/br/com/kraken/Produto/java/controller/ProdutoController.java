@@ -1,11 +1,16 @@
 package br.com.kraken.Produto.java.controller;
 
+import br.com.kraken.Produto.java.dto.AcessoDTO;
 import br.com.kraken.Produto.java.dto.ProdutoModelDTO;
+import br.com.kraken.Produto.java.model.AcessoModel;
 import br.com.kraken.Produto.java.model.ProdutoModel;
+import br.com.kraken.Produto.java.service.AcessoService;
 import br.com.kraken.Produto.java.service.ProdutoService;
 import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,11 +27,23 @@ import java.util.UUID;
 @RequestMapping("/produto")
 public class ProdutoController {
     private final ProdutoService produtoService;
+    private final AcessoService acessoService;
 
-    public ProdutoController (ProdutoService produtoService) {
+    public ProdutoController (ProdutoService produtoService, AcessoService acessoService) {
         this.produtoService = produtoService;
+        this.acessoService = acessoService;
     }
+
+    @PostMapping("/auth/registry")
+    public ResponseEntity<Object> clienteEstoque (@RequestBody @Valid AcessoDTO acessoDTO) {
+        var acessoModel = new AcessoModel();
+        BeanUtils.copyProperties(acessoDTO, acessoModel);
+        acessoModel.setDataCadastro(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
+        return ResponseEntity.status(HttpStatus.CREATED).body(acessoService.getRepository().save(acessoModel));
+    }
+
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> cadastrar(@RequestParam(value = "nomeProduto") String nomeProduto,
                                             @RequestParam(value = "descricao") String descricao,
                                             @RequestParam(value = "categoriaId") UUID categoriaId,
@@ -54,11 +71,13 @@ public class ProdutoController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<List<ProdutoModel>> listar () {
         return ResponseEntity.status(HttpStatus.OK).body(produtoService.findAll());
     }
 
     @GetMapping ("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<Object> localizar(@PathVariable (value = "id") UUID id){
         Optional<ProdutoModel> produtoModelOptional = produtoService.getProdutoRepository().findById(id);
         return produtoModelOptional.<ResponseEntity<Object>>map(
@@ -68,6 +87,7 @@ public class ProdutoController {
     }
 
     @DeleteMapping("/{identificador}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> deletar(@PathVariable (value = "identificador") UUID identificador){
         Optional<ProdutoModel> produtoModelOptional = produtoService.getProdutoRepository().findById(identificador);
         if (!produtoModelOptional.isPresent())
@@ -77,6 +97,7 @@ public class ProdutoController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> alterar(@PathVariable (value = "id") UUID id, @RequestBody @Valid ProdutoModelDTO produtoModelDTO){
         Optional<ProdutoModel> produtoModelOptional = produtoService.getProdutoRepository().findById(id);
         if (!produtoModelOptional.isPresent())
