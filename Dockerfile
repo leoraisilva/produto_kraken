@@ -14,8 +14,8 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-COPY --from=build /app/target/produto-0.0.1-SNAPSHOT.jar /app/produto.jar
+COPY --from=build /app/target/Produto-0.0.1-SNAPSHOT.jar /app/Produto.jar
 
 EXPOSE 8081
 
-ENTRYPOINT ["java", "-jar", "/app/produto.jar"]
+ENTRYPOINT ["java", "-jar", "/app/Produto.jar"]
