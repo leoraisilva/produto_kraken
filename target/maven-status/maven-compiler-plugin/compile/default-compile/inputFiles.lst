@@ -1,0 +1,14 @@
+/home/summ17/Documentos/projeto/kraken/produto_kraken/src/main/java/br/com/kraken/Produto/ProdutoApplication.java
+/home/summ17/Documentos/projeto/kraken/produto_kraken/src/main/java/br/com/kraken/Produto/java/configs/ProdutoSecurity.java
+/home/summ17/Documentos/projeto/kraken/produto_kraken/src/main/java/br/com/kraken/Produto/java/configs/SecurityFilter.java
+/home/summ17/Documentos/projeto/kraken/produto_kraken/src/main/java/br/com/kraken/Produto/java/configs/TokenService.java
+/home/summ17/Documentos/projeto/kraken/produto_kraken/src/main/java/br/com/kraken/Produto/java/controller/ProdutoController.java
+/home/summ17/Documentos/projeto/kraken/produto_kraken/src/main/java/br/com/kraken/Produto/java/dto/AcessoDTO.java
+/home/summ17/Documentos/projeto/kraken/produto_kraken/src/main/java/br/com/kraken/Produto/java/dto/ProdutoModelDTO.java
+/home/summ17/Documentos/projeto/kraken/produto_kraken/src/main/java/br/com/kraken/Produto/java/model/AcessoModel.java
+/home/summ17/Documentos/projeto/kraken/produto_kraken/src/main/java/br/com/kraken/Produto/java/model/ProdutoModel.java
+/home/summ17/Documentos/projeto/kraken/produto_kraken/src/main/java/br/com/kraken/Produto/java/model/Rules.java
+/home/summ17/Documentos/projeto/kraken/produto_kraken/src/main/java/br/com/kraken/Produto/java/repository/AcessoRepository.java
+/home/summ17/Documentos/projeto/kraken/produto_kraken/src/main/java/br/com/kraken/Produto/java/repository/ProdutoRepository.java
+/home/summ17/Documentos/projeto/kraken/produto_kraken/src/main/java/br/com/kraken/Produto/java/service/AcessoService.java
+/home/summ17/Documentos/projeto/kraken/produto_kraken/src/main/java/br/com/kraken/Produto/java/service/ProdutoService.java
