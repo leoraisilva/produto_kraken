@@ -97,7 +97,7 @@ public class ProdutoController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<Object> alterar(@PathVariable (value = "id") UUID id, @RequestBody @Valid ProdutoModelDTO produtoModelDTO){
         Optional<ProdutoModel> produtoModelOptional = produtoService.getProdutoRepository().findById(id);
         if (!produtoModelOptional.isPresent())
