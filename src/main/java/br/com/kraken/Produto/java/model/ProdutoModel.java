@@ -17,24 +17,27 @@ public class ProdutoModel {
     private String descricao;
     @Column(name = "data_modificacao", nullable = false)
     private LocalDateTime dataModificacao;
-    @Column(name = "categoriaId", nullable = false)
+    @Column(name = "categoria_id", nullable = false)
     private UUID categoriaId;
     @Column(name = "valor_unitario", nullable = false)
     private float valorUnitario;
-    @Column(name = "estoqueId", nullable = false)
+    @Column(name = "estoque_id", nullable = false)
     private UUID estoqueId;
+    @Column(name = "cliente_id", nullable = false)
+    private UUID clienteId;
     @Column(name = "quantidade_produto")
     private int quantidadeProduto;
     @Column(name = "image", columnDefinition = "TEXT")
     private String image;
 
-    public ProdutoModel(String nomeProduto, String descricao, LocalDateTime dataModificacao, UUID categoriaId, float valorUnitario, UUID estoqueId, int quantidadeProduto, String image) {
+    public ProdutoModel(String nomeProduto, String descricao, LocalDateTime dataModificacao, UUID categoriaId, float valorUnitario, UUID estoqueId, UUID clienteId, int quantidadeProduto, String image) {
         this.nomeProduto = nomeProduto;
         this.descricao = descricao;
         this.dataModificacao = dataModificacao;
         this.categoriaId = categoriaId;
         this.valorUnitario = valorUnitario;
         this.estoqueId = estoqueId;
+        this.clienteId = clienteId;
         this.quantidadeProduto = quantidadeProduto;
         this.image = image;
     }
@@ -111,5 +114,13 @@ public class ProdutoModel {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public UUID getClienteId() {
+        return clienteId;
+    }
+
+    public void setClienteId(UUID clienteId) {
+        this.clienteId = clienteId;
     }
 }

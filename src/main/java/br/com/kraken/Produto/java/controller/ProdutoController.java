@@ -49,6 +49,7 @@ public class ProdutoController {
                                             @RequestParam(value = "categoriaId") UUID categoriaId,
                                             @RequestParam(value = "valorUnitario") float valorUnitario,
                                             @RequestParam(value = "estoqueId") UUID estoqueId,
+                                            @RequestParam(value = "clienteId") UUID clienteId,
                                             @RequestParam(value = "quantidadeProduto") int quantidadeProduto,
                                             @RequestPart(value = "image")MultipartFile image) {
         ProdutoModel produtoModel = new ProdutoModel();
@@ -61,6 +62,7 @@ public class ProdutoController {
             produtoModel.setQuantidadeProduto(quantidadeProduto);
             produtoModel.setCategoriaId(categoriaId);
             produtoModel.setEstoqueId(estoqueId);
+            produtoModel.setClienteId(clienteId);
             produtoModel.setDescricao(descricao);
             produtoModel.setValorUnitario(valorUnitario);
             produtoModel.setDataModificacao(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
@@ -107,6 +109,7 @@ public class ProdutoController {
         produtoModelOptional.get().setQuantidadeProduto(produtoModelDTO.quantidadeProduto());
         produtoModelOptional.get().setDataModificacao(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
         produtoModelOptional.get().setEstoqueId(produtoModelDTO.estoqueId());
+        produtoModelOptional.get().setClienteId(produtoModelDTO.clienteId());
         produtoModelOptional.get().setCategoriaId(produtoModelDTO.categoriaId());
         produtoModelOptional.get().setValorUnitario(produtoModelDTO.valorUnitario());
         return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.getProdutoRepository().save(produtoModelOptional.get()));
